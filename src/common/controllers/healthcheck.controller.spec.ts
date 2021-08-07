@@ -15,4 +15,12 @@ describe('HealthcheckController', () => {
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
+
+  it('should return the object {healthy: true}', () => {
+    const response = controller.healthCheck();
+    const responseExpected = {
+      healthy: true,
+    };
+    expect(JSON.stringify(response)).toBe(JSON.stringify(responseExpected));
+  });
 });
