@@ -10,7 +10,7 @@ export const databaseProviders = [
         port: 27017,
         username: 'root',
         password: '123456',
-        database: 'admin',
+        database: 'taskmanager_api',
         entities: [__dirname + '/../../**/*.entity{.ts,.js}'],
         synchronize: true,
       }),

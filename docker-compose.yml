@@ -28,3 +28,4 @@ services:
       - 27017:27017
     volumes:
       - ./dbdata:/data/db
+      - ./seed-data/tasks.js:/docker-entrypoint-initdb.d/tasks.js:ro
