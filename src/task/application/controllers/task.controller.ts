@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { CreateTaskRequest } from '../../domain/requests/create-task-request';
+import { CreateTaskRequest } from '../contracts/requests/create-task-request';
 
 @Controller('task')
 export class TaskController {
