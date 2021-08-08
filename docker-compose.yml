@@ -9,7 +9,6 @@ services:
       TZ: 'America/Sao_Paulo'
     volumes:
       - .:/usr/src/app
-      - /usr/src/app/node_modules
     ports:
       - 3000:3000
       - 9229:9229
@@ -28,3 +27,4 @@ services:
       - 27017:27017
     volumes:
       - ./dbdata:/data/db
+      - ./seed-data/tasks.js:/docker-entrypoint-initdb.d/tasks.js:ro
