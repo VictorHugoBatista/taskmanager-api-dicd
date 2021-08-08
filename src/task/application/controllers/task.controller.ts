@@ -14,11 +14,6 @@ export class TaskController {
   @ApiBody({ type: CreateTaskRequest })
   @ApiTags('Tasks')
   create(@Body() body: CreateTaskRequest) {
-    const toCreate = body as Task;
-    toCreate.createdAt = new Date();
-    const createdTask = this.taskRepository.create(toCreate);
-    // salva
-    // retorna resultado
-    return body;
+    return this.taskRepository.create(body as Task);
   }
 }

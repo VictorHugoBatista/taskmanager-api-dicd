@@ -14,14 +14,14 @@ export class Task {
   @Prop()
   description: string;
 
-  @Prop()
-  isDone: boolean;
+  @Prop({ default: false })
+  isDone?: boolean;
 
-  @Prop()
-  createdAt: Date;
+  @Prop({ default: new Date() })
+  createdAt?: Date;
 
-  @Prop()
-  updatedAt: Date;
+  @Prop({ default: null })
+  updatedAt?: Date;
 }
 
 export const TaskSchema = SchemaFactory.createForClass(Task);
