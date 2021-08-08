@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Task } from '../contracts/entities/task.entity';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Task, TaskDocument } from '../contracts/entities/task.entity';
 
 @Injectable()
 export class TaskRepository {
   constructor(
-    @InjectRepository(Task)
-    private repository: Repository<Task>,
+    @InjectModel(Task.name)
+    private model: Model<TaskDocument>
   ) {}
 
   create(newTask: Task) {
-    return this.repository.create(newTask);
+    return this.model.create(newTask);
   }
 }

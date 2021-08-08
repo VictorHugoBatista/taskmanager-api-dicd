@@ -1,19 +1,27 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 
-@Entity()
+export type TaskDocument = Task & Document;
+
+@Schema()
 export class Task {
-  @PrimaryGeneratedColumn()
+  @Prop()
   id: number;
 
-  @Column()
+  @Prop()
   title: string;
 
-  @Column()
+  @Prop()
   description: string;
 
-  @Column()
+  @Prop()
+  isDone: boolean;
+
+  @Prop()
   createdAt: Date;
 
-  @Column()
+  @Prop()
   updatedAt: Date;
 }
+
+export const TaskSchema = SchemaFactory.createForClass(Task);
