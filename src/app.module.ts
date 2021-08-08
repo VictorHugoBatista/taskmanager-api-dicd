@@ -1,10 +1,8 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { CommonModule } from './common/common.module';
-import { databaseProviders } from './common/database/database.providers';
 
 @Module({
-  providers: [...databaseProviders],
-  exports: [...databaseProviders],
-  imports: [CommonModule],
+  imports: [CommonModule, TypeOrmModule.forRoot()],
 })
 export class AppModule {}
