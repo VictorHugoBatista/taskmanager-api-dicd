@@ -7,7 +7,7 @@ import { Task, TaskDocument } from '../contracts/entities/task.entity';
 export class TaskRepository {
   constructor(
     @InjectModel(Task.name)
-    private model: Model<TaskDocument>
+    private model: Model<TaskDocument>,
   ) {}
 
   create(newTask: Task) {
