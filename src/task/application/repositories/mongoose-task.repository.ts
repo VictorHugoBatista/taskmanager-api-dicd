@@ -10,7 +10,7 @@ export class TaskRepository {
     private model: Model<TaskDocument>,
   ) {}
 
-  create(newTask: Task) {
+  public create(newTask: Task) {
     return this.model.create(newTask);
   }
 }
