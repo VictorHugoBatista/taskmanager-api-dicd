@@ -1,0 +1,14 @@
+#!/bin/bash
+
+printf "[---------- Clear DB ----------]"
+
+printf "\n\n❯ Destroying containers\n"
+docker-compose down
+
+printf "\n\n❯ Removing dbdata directory\n"
+rm -rf $(echo $(dirname $0)'/../dbdata')
+
+printf "\n\n❯ Starting shiny new containers\n"
+docker-compose up -d
+
+printf "\n\n[------------------------------]"
