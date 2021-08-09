@@ -32,6 +32,30 @@
 $ npm install
 ```
 
+## Running the app with database with Docker
+The commands below requires:
+ - docker
+ - docker-compose
+```bash
+# Starts the containers
+bin/cmp up -d
+
+# Stops the containers
+bin/cmp stop
+
+# Restarts the containers
+bin/cmp restart
+
+# Destroys the containers
+bin/cmp down
+
+# Shorthand for:
+# - Destroy all the containers
+# - Clear the current database by removing the dbdata directory
+# - Recreate the containers with a brand new database
+sudo bin/cmp-clear-db
+```
+
 ## Running the app
 
 ```bash
