@@ -54,6 +54,10 @@ bin/cmp down
 # - Clear the current database by removing the dbdata directory
 # - Recreate the containers with a brand new database
 sudo bin/cmp-clear-db
+
+# Shorthand for 'docker exec -it taskmanager-api-nodejs <command>'
+# Runs a command inside the node container
+bin/exec <command>
 ```
 
 ## Running the app
