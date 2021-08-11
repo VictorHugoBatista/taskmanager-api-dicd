@@ -4,10 +4,14 @@ import { TaskRepository } from '../../domain/repositories/task.repository';
 
 @Injectable()
 export class InMemoryTaskRepository implements TaskRepository {
-  private tasks: Task[];
+  public data: Task[];
+
+  public constructor() {
+    this.data = [];
+  }
 
   public create(newTask: Task) {
-    this.tasks.push(newTask);
+    this.data.push(newTask);
     return newTask;
   }
 }
