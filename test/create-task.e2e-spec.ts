@@ -7,6 +7,7 @@ import { TaskRepository as TaskRepositoryAbstract } from '../src/task/domain/rep
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
+  let repository: InMemoryTaskRepository;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -18,6 +19,10 @@ describe('AppController (e2e)', () => {
         },
       ],
     }).compile();
+
+    repository = moduleFixture.get<TaskRepositoryAbstract>(
+      TaskRepositoryAbstract,
+    ) as unknown as InMemoryTaskRepository;
 
     app = moduleFixture.createNestApplication();
     app.useGlobalPipes(
@@ -50,7 +55,7 @@ describe('AppController (e2e)', () => {
       .expect(400);
   });
 
-  it('gives a success message for sending the boy right', () => {
+  it('gives a success message for sending the right payload', () => {
     const taskForCreate = {
       title: 'title',
       description: 'title',
@@ -58,10 +63,22 @@ describe('AppController (e2e)', () => {
     return request(app.getHttpServer())
       .post('/task')
       .send(taskForCreate)
-      .expect(201)
+      .expect(201);
+  });
+
+  it('returns and saves task on the database', () => {
+    const taskForCreate = {
+      title: 'title',
+      description: 'title',
+    };
+    return request(app.getHttpServer())
+      .post('/task')
+      .send(taskForCreate)
       .expect(({ body }) => {
+        const [createdTask] = repository.data;
         expect(body.title).toEqual(taskForCreate.title);
         expect(body.description).toEqual(taskForCreate.description);
+        expect(body).toEqual(createdTask);
       });
   });
 });
