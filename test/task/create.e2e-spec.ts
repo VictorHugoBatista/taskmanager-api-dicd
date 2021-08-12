@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ValidationPipe, INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { TaskController } from '../src/task/application/controllers/task.controller';
-import { InMemoryTaskRepository } from '../src/task/application/repositories/in-memory-task-repository';
-import { TaskRepository as TaskRepositoryAbstract } from '../src/task/domain/repositories/task.repository';
+import { TaskController } from '../../src/task/application/controllers/task.controller';
+import { InMemoryTaskRepository } from '../../src/task/application/repositories/in-memory-task-repository';
+import { TaskRepository as TaskRepositoryAbstract } from '../../src/task/domain/repositories/task.repository';
 
-describe('AppController (e2e)', () => {
+describe('TaskController.create (e2e)', () => {
   let app: INestApplication;
   let repository: InMemoryTaskRepository;
 
