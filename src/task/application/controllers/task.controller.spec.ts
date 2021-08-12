@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TaskController } from './task.controller';
-
+import { CreateTaskBuilder } from '../builders/create-task-request.builder';
 import { InMemoryTaskRepository } from '../repositories/in-memory-task-repository';
 import { TaskRepository as TaskRepositoryAbstract } from '../../domain/repositories/task.repository';
 
@@ -30,20 +30,14 @@ describe('TaskController', () => {
   });
 
   it('creates a task in the database', () => {
-    const taskToCreate = {
-      title: 'test title',
-      description: 'test description',
-    };
+    const taskToCreate = CreateTaskBuilder.build();
     controller.create(taskToCreate);
     const [savedTask] = repository.data;
     expect(savedTask).toBe(taskToCreate);
   });
 
   it('returns the task after save it', () => {
-    const taskToCreate = {
-      title: 'test title',
-      description: 'test description',
-    };
+    const taskToCreate = CreateTaskBuilder.build();
     const response = controller.create(taskToCreate);
     expect(response).toBe(taskToCreate);
   });

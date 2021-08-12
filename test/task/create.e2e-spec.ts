@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ValidationPipe, INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
+import { CreateTaskBuilder } from '../../src/task/application/builders/create-task-request.builder';
 import { TaskController } from '../../src/task/application/controllers/task.controller';
 import { InMemoryTaskRepository } from '../../src/task/application/repositories/in-memory-task-repository';
 import { TaskRepository as TaskRepositoryAbstract } from '../../src/task/domain/repositories/task.repository';
@@ -50,16 +51,13 @@ describe('TaskController.create (e2e)', () => {
     return request(app.getHttpServer())
       .post('/task')
       .send({
-        description: 'title',
+        description: 'description',
       })
       .expect(400);
   });
 
   it('gives a success message for sending the right payload', () => {
-    const taskForCreate = {
-      title: 'title',
-      description: 'title',
-    };
+    const taskForCreate = CreateTaskBuilder.build();
     return request(app.getHttpServer())
       .post('/task')
       .send(taskForCreate)
@@ -67,10 +65,7 @@ describe('TaskController.create (e2e)', () => {
   });
 
   it('returns and saves task on the database', () => {
-    const taskForCreate = {
-      title: 'title',
-      description: 'title',
-    };
+    const taskForCreate = CreateTaskBuilder.build();
     return request(app.getHttpServer())
       .post('/task')
       .send(taskForCreate)
