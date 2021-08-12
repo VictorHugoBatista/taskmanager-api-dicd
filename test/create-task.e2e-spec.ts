@@ -1,14 +1,22 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ValidationPipe, INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
+import { TaskController } from '../src/task/application/controllers/task.controller';
+import { InMemoryTaskRepository } from '../src/task/application/repositories/in-memory-task-repository';
+import { TaskRepository as TaskRepositoryAbstract } from '../src/task/domain/repositories/task.repository';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
+      controllers: [TaskController],
+      providers: [
+        {
+          provide: TaskRepositoryAbstract,
+          useClass: InMemoryTaskRepository,
+        },
+      ],
     }).compile();
 
     app = moduleFixture.createNestApplication();
