@@ -15,7 +15,7 @@ export class InMemoryTaskRepository implements TaskRepository {
     return newTask;
   }
 
-  public list(): Task[] {
+  public async list(): Promise<Task[]> {
     return this.data;
   }
 }
