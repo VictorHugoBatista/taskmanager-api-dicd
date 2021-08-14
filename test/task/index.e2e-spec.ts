@@ -44,7 +44,7 @@ describe('TaskController.index (e2e)', () => {
       .get('/task')
       .expect(200)
       .expect(({ body }) => {
-        expect(body.data).toEqual(repository.data);
+        expect(JSON.stringify(body)).toEqual(JSON.stringify(repository.data));
       });
   });
 
@@ -54,7 +54,7 @@ describe('TaskController.index (e2e)', () => {
       .get('/task')
       .expect(200)
       .expect(({ body }) => {
-        expect(body.data).toEqual(repository.data);
+        expect(JSON.stringify(body)).toEqual(JSON.stringify(repository.data));
       });
   });
 });
