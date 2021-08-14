@@ -14,4 +14,11 @@ export class TaskRepository implements TaskRepositoryAbstract {
   public create(newTask: Task) {
     return this.model.create(newTask);
   }
+
+  /**
+   * @todo Implement method.
+   */
+  public list(): Task[] {
+    return [];
+  }
 }

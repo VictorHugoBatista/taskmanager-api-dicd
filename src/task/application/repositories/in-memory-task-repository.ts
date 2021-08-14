@@ -14,4 +14,8 @@ export class InMemoryTaskRepository implements TaskRepository {
     this.data.push(newTask);
     return newTask;
   }
+
+  public list(): Task[] {
+    return this.data;
+  }
 }
