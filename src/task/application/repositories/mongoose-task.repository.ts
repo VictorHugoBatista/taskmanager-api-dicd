@@ -18,7 +18,8 @@ export class TaskRepository implements TaskRepositoryAbstract {
   /**
    * @todo Implement method.
    */
-  public async list(): Promise<Task[]> {
-    return await this.model.find({}).exec();
+  public async list(id?: number): Promise<Task[]> {
+    const query = id ? { id } : {};
+    return await this.model.find(query).exec();
   }
 }
