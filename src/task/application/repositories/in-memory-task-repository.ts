@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongodb';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { MongodbHelper } from '../../../common/application/helpers/mongodb';
 import { Task } from '../contracts/entities/task.entity';
 import { TaskRepository } from '../../domain/repositories/task.repository';
 
@@ -21,7 +22,7 @@ export class InMemoryTaskRepository implements TaskRepository {
   }
 
   public async get(id: string): Promise<Task> {
-    if (!ObjectId.isValid(id)) {
+    if (!MongodbHelper.isObjectIdValid(id)) {
       throw new InternalServerErrorException();
     }
 
