@@ -1,5 +1,6 @@
 import { Body, Controller, Get, NotFoundException, Param, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { MongodbIdValidation } from '../../../common/application/pipes/mongodb-id-validation-pipe';
 import { CreateTaskRequest } from '../contracts/requests/create-task-request';
 import { TaskRepository } from '../../domain/repositories/task.repository';
 
@@ -19,7 +20,7 @@ export class TaskController {
   @Get('/:id')
   @ApiOperation({ summary: 'Get task by id' })
   @ApiTags('Tasks')
-  public async show(@Param('id') id: string) {
+  public async show(@Param('id', new MongodbIdValidation()) id: string) {
     const task = await this.taskRepository.get(id);
 
     if (!task) {
