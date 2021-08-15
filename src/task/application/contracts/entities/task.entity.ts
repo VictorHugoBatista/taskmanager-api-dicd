@@ -6,7 +6,7 @@ export type TaskDocument = Task & Document;
 @Schema()
 export class Task {
   @Prop()
-  id: number;
+  _id: string;
 
   @Prop()
   title: string;

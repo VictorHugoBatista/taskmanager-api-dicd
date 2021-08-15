@@ -1,10 +1,10 @@
-import { datatype, lorem } from 'faker';
+import { datatype, lorem, random } from 'faker';
 import { Task } from '../contracts/entities/task.entity';
 
 export class CreateTaskBuilder {
   public static build(): Task {
     return {
-      id: datatype.number(),
+      _id: random.alphaNumeric(),
       title: lorem.sentence(),
       description: lorem.sentences(),
       isDone: datatype.boolean(),

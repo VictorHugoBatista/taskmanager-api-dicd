@@ -15,11 +15,12 @@ export class InMemoryTaskRepository implements TaskRepository {
     return newTask;
   }
 
-  public async list(id?: number): Promise<Task[]> {
-    if (id) {
-      return this.data.filter((item: Task) => item.id === id);
-    }
-
+  public async list(): Promise<Task[]> {
     return this.data;
+  }
+
+  public async get(id: string): Promise<Task> {
+    const [task] = this.data.filter((item: Task) => item._id === id);
+    return task;
   }
 }

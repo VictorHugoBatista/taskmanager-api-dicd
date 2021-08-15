@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, NotFoundException, Param, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateTaskRequest } from '../contracts/requests/create-task-request';
 import { TaskRepository } from '../../domain/repositories/task.repository';
@@ -19,8 +19,14 @@ export class TaskController {
   @Get('/:id')
   @ApiOperation({ summary: 'Get task by id' })
   @ApiTags('Tasks')
-  public show(@Param('id') id: number) {
-    return { test: id };
+  public async show(@Param('id') id: string) {
+    const task = await this.taskRepository.get(id);
+
+    if (!task) {
+      throw new NotFoundException();
+    }
+
+    return task;
   }
 
   @Post()
