@@ -1,37 +1,17 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { ValidationPipe, INestApplication } from '@nestjs/common';
+import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { CreateTaskBuilder } from '../../src/task/application/builders/create-task-entity.builder';
-import { TaskController } from '../../src/task/application/controllers/task.controller';
 import { InMemoryTaskRepository } from '../../src/task/application/repositories/in-memory-task-repository';
-import { TaskRepository as TaskRepositoryAbstract } from '../../src/task/domain/repositories/task.repository';
+import { TaskModuleTest } from './builders/task-module-test';
 
 describe('TaskController.index (e2e)', () => {
   let app: INestApplication;
   let repository: InMemoryTaskRepository;
 
   beforeEach(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      controllers: [TaskController],
-      providers: [
-        {
-          provide: TaskRepositoryAbstract,
-          useClass: InMemoryTaskRepository,
-        },
-      ],
-    }).compile();
-
-    repository = moduleFixture.get<TaskRepositoryAbstract>(
-      TaskRepositoryAbstract,
-    ) as unknown as InMemoryTaskRepository;
-
-    app = moduleFixture.createNestApplication();
-    app.useGlobalPipes(
-      new ValidationPipe({
-        transform: true,
-      }),
-    );
-    await app.init();
+    await TaskModuleTest.startModule();
+    app = TaskModuleTest.app;
+    repository = TaskModuleTest.repository;
   });
 
   it('should return all of the tasks existing in database', () => {
