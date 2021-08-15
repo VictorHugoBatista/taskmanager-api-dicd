@@ -1,4 +1,3 @@
-import { ObjectId } from 'mongodb';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { MongodbHelper } from '../../../common/application/helpers/mongodb';
 import { Task } from '../contracts/entities/task.entity';
