@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { MongodbHelper } from '../../../common/application/helpers/mongodb';
 import { Task } from '../contracts/entities/task.entity';
 import { TaskRepository } from '../../domain/repositories/task.repository';
 
@@ -17,5 +18,14 @@ export class InMemoryTaskRepository implements TaskRepository {
 
   public async list(): Promise<Task[]> {
     return this.data;
+  }
+
+  public async get(id: string): Promise<Task> {
+    if (!MongodbHelper.isObjectIdValid(id)) {
+      throw new InternalServerErrorException();
+    }
+
+    const [task] = this.data.filter((item: Task) => item.id === id);
+    return task;
   }
 }
