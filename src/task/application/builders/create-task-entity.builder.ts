@@ -4,7 +4,7 @@ import { Task } from '../contracts/entities/task.entity';
 export class CreateTaskBuilder {
   public static build(): Task {
     return {
-      _id: random.alphaNumeric(),
+      id: random.alphaNumeric(),
       title: lorem.sentence(),
       description: lorem.sentences(),
       isDone: datatype.boolean(),

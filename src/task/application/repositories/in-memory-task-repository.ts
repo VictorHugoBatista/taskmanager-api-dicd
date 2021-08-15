@@ -20,7 +20,7 @@ export class InMemoryTaskRepository implements TaskRepository {
   }
 
   public async get(id: string): Promise<Task> {
-    const [task] = this.data.filter((item: Task) => item._id === id);
+    const [task] = this.data.filter((item: Task) => item.id === id);
     return task;
   }
 }

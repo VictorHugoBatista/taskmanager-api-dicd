@@ -22,7 +22,7 @@ describe('TaskController.show (e2e)', () => {
   it('should get the existing task ids', () => {
     const taskForSearch = repository.data[1];
     return request(app.getHttpServer())
-      .get(`/task/${taskForSearch._id}`)
+      .get(`/task/${taskForSearch.id}`)
       .expect(200)
       .expect(({ body }) => {
         expect(JSON.stringify(body)).toEqual(JSON.stringify(taskForSearch));
