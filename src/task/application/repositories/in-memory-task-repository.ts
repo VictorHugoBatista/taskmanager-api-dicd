@@ -28,4 +28,21 @@ export class InMemoryTaskRepository implements TaskRepository {
     const [task] = this.data.filter((item: Task) => item.id === id);
     return task;
   }
+
+  public async delete(id: string): Promise<Task> {
+    if (!MongodbHelper.isObjectIdValid(id)) {
+      throw new InternalServerErrorException();
+    }
+
+    let task: Task;
+    this.data = this.data.filter((item: Task) => {
+      const removeItem = item.id !== id;
+      if (removeItem) {
+        task = item;
+      }
+      return removeItem;
+    });
+
+    return task;
+  }
 }
