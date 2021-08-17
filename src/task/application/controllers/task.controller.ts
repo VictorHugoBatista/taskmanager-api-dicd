@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   NotFoundException,
   Param,
@@ -43,5 +44,18 @@ export class TaskController {
   @ApiTags('Tasks')
   public create(@Body() body: CreateTaskRequest) {
     return this.taskRepository.create(body as Task);
+  }
+
+  @Delete('/:id')
+  @ApiOperation({ summary: 'Delete task by id' })
+  @ApiTags('Tasks')
+  public async delete(@Param('id', new MongodbIdValidation()) id: string) {
+    const task = await this.taskRepository.delete(id);
+
+    if (!task) {
+      throw new NotFoundException();
+    }
+
+    return task;
   }
 }
