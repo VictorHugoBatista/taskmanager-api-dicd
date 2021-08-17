@@ -5,7 +5,7 @@ import { CreateTaskBuilder } from '../../src/task/application/builders/create-ta
 import { InMemoryTaskRepository } from '../../src/task/application/repositories/in-memory-task-repository';
 import { TaskModuleTest } from './builders/task-module-test';
 
-describe('TaskController.show (e2e)', () => {
+describe('TaskController.delete (e2e)', () => {
   let app: INestApplication;
   let repository: InMemoryTaskRepository;
 
@@ -20,25 +20,26 @@ describe('TaskController.show (e2e)', () => {
     ];
   });
 
-  it('should get the existing task ids', () => {
-    const taskForSearch = repository.data[1];
+  it('should return and delete the given task id', () => {
+    const taskForSearch = repository.data[2];
     return request(app.getHttpServer())
-      .get(`/task/${taskForSearch.id}`)
+      .delete(`/task/${taskForSearch.id}`)
       .expect(200)
       .expect(({ body }) => {
         expect(JSON.stringify(body)).toEqual(JSON.stringify(taskForSearch));
+        expect(repository.data[2]).toBeUndefined();
       });
   });
 
   it('should return 404 for non existing task', () => {
     return request(app.getHttpServer())
-      .get(`/task/${MongodbHelper.generateObjectId()}`)
+      .delete(`/task/${MongodbHelper.generateObjectId()}`)
       .expect(404);
   });
 
   it('should return 404 for invalid task id', () => {
     return request(app.getHttpServer())
-      .get('/task/non-valid-task-id')
+      .delete('/task/nonn-valid-task-id')
       .expect(404);
   });
 });

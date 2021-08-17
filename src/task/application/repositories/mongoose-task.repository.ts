@@ -22,4 +22,8 @@ export class TaskRepository implements TaskRepositoryAbstract {
   public async get(id: string): Promise<Task> {
     return await this.model.findById(id);
   }
+
+  public async delete(id: string): Promise<Task> {
+    return await this.model.findByIdAndDelete(id);
+  }
 }
