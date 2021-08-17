@@ -4,9 +4,7 @@ import { MongodbHelper } from '../helpers/mongodb';
 @Injectable()
 export class MongodbIdValidation {
   transform(value: string) {
-    if (!MongodbHelper.isObjectIdValid(value)) {
-      throw new NotFoundException();
-    }
+    MongodbHelper.validateObjectId(value, new NotFoundException());
     return value;
   }
 }
