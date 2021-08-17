@@ -34,9 +34,9 @@ export class InMemoryTaskRepository implements TaskRepository {
       throw new InternalServerErrorException();
     }
 
-    let task: Task;
+    let task: Task = null;
     this.data = this.data.filter((item: Task) => {
-      const removeItem = item.id !== id;
+      const removeItem = item.id === id;
       if (removeItem) {
         task = item;
       }

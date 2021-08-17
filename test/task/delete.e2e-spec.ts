@@ -27,7 +27,7 @@ describe('TaskController.delete (e2e)', () => {
       .expect(200)
       .expect(({ body }) => {
         expect(JSON.stringify(body)).toEqual(JSON.stringify(taskForSearch));
-        expect(repository.data[2]).toBeNull();
+        expect(repository.data[2]).toBeUndefined();
       });
   });
 
