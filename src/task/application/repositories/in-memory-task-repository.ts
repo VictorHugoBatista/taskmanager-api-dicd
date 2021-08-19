@@ -41,4 +41,25 @@ export class InMemoryTaskRepository implements TaskRepository {
 
     return task;
   }
+
+  public async update(id: string, dataForUpdate: Task): Promise<Task> {
+    MongodbHelper.validateObjectId(id);
+
+    dataForUpdate.updatedAt = new Date();
+
+    let taskKey: number;
+    let [task] = this.data.filter((item: Task, taskArrayKey: number) => {
+      if (item.id === id) {
+        taskKey = taskArrayKey;
+      }
+      return item.id === id;
+    });
+    task = {
+      ...task,
+      ...dataForUpdate,
+    };
+    this.data[taskKey] = task;
+
+    return task;
+  }
 }
