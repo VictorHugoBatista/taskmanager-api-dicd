@@ -52,11 +52,11 @@ export class TaskController {
   @ApiOperation({ summary: 'Update task' })
   @ApiBody({ type: UpdateTaskRequest })
   @ApiTags('Tasks')
-  public update(
+  public async update(
     @Param('id', new MongodbIdValidation()) id: string,
     @Body() body: UpdateTaskRequest,
   ) {
-    const task = this.taskRepository.update(id, body as Task);
+    const task = await this.taskRepository.update(id, body as Task);
 
     if (!task) {
       throw new NotFoundException();

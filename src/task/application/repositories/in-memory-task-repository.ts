@@ -45,7 +45,7 @@ export class InMemoryTaskRepository implements TaskRepository {
   public async update(id: string, dataForUpdate: Task): Promise<Task> {
     MongodbHelper.validateObjectId(id);
 
-    dataForUpdate.updatedAt = new Date();
+    // dataForUpdate.updatedAt = new Date();
 
     let taskKey: number;
     let [task] = this.data.filter((item: Task, taskArrayKey: number) => {
@@ -54,6 +54,11 @@ export class InMemoryTaskRepository implements TaskRepository {
       }
       return item.id === id;
     });
+
+    if (!task) {
+      return undefined;
+    }
+
     task = {
       ...task,
       ...dataForUpdate,
