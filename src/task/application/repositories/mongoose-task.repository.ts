@@ -29,6 +29,6 @@ export class TaskRepository implements TaskRepositoryAbstract {
 
   public async update(id: string, dataForUpdate: Task): Promise<Task> {
     dataForUpdate.updatedAt = new Date();
-    return await this.model.findByIdAndUpdate(id, dataForUpdate);
+    return await this.model.findByIdAndUpdate(id, dataForUpdate, { new: true });
   }
 }
