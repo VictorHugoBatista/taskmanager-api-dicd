@@ -67,6 +67,21 @@ describe('TaskController.delete (e2e)', () => {
       });
   });
 
+  it('should return a 400 error for a empty body', () => {
+    const taskForSearch = repository.data[2];
+    return request(app.getHttpServer())
+      .patch(`/task/${taskForSearch.id}`)
+      .send({})
+      .expect(400);
+  });
+
+  it('should return a 400 error for not sending a body', () => {
+    const taskForSearch = repository.data[2];
+    return request(app.getHttpServer())
+      .patch(`/task/${taskForSearch.id}`)
+      .expect(400);
+  });
+
   it('should return 404 for non existing task', () => {
     return request(app.getHttpServer())
       .patch(`/task/${MongodbHelper.generateObjectId()}`)
