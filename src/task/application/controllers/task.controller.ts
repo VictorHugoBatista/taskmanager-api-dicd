@@ -5,6 +5,7 @@ import {
   Get,
   NotFoundException,
   Param,
+  Patch,
   Post,
 } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -44,6 +45,17 @@ export class TaskController {
   @ApiTags('Tasks')
   public create(@Body() body: CreateTaskRequest) {
     return this.taskRepository.create(body as Task);
+  }
+
+  @Patch(':id')
+  @ApiOperation({ summary: 'Update task' })
+  @ApiBody({ type: CreateTaskRequest })
+  @ApiTags('Tasks')
+  public update(
+    @Param('id', new MongodbIdValidation()) id: string,
+    @Body() body: CreateTaskRequest,
+  ) {
+    return this.taskRepository.update(id, body as Task);
   }
 
   @Delete('/:id')
