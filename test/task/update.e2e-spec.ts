@@ -21,6 +21,13 @@ describe('TaskController.delete (e2e)', () => {
     ];
   });
 
+  const validateUpdateSuccess = (body, taskForUpdate) => {
+    expect(JSON.stringify(body)).toEqual(JSON.stringify(taskForUpdate));
+    expect(JSON.stringify(repository.data[2])).toEqual(
+      JSON.stringify(taskForUpdate),
+    );
+  };
+
   it('should update title and return the given task id', () => {
     const taskForSearch = repository.data[2];
     taskForSearch.title = lorem.sentence();
@@ -29,10 +36,7 @@ describe('TaskController.delete (e2e)', () => {
       .send(taskForSearch)
       .expect(200)
       .expect(({ body }) => {
-        expect(JSON.stringify(body)).toEqual(JSON.stringify(taskForSearch));
-        expect(JSON.stringify(repository.data[2])).toEqual(
-          JSON.stringify(taskForSearch),
-        );
+        validateUpdateSuccess(body, taskForSearch);
       });
   });
 
@@ -44,10 +48,7 @@ describe('TaskController.delete (e2e)', () => {
       .send(taskForSearch)
       .expect(200)
       .expect(({ body }) => {
-        expect(JSON.stringify(body)).toEqual(JSON.stringify(taskForSearch));
-        expect(JSON.stringify(repository.data[2])).toEqual(
-          JSON.stringify(taskForSearch),
-        );
+        validateUpdateSuccess(body, taskForSearch);
       });
   });
 
@@ -60,10 +61,7 @@ describe('TaskController.delete (e2e)', () => {
       .send(taskForSearch)
       .expect(200)
       .expect(({ body }) => {
-        expect(JSON.stringify(body)).toEqual(JSON.stringify(taskForSearch));
-        expect(JSON.stringify(repository.data[2])).toEqual(
-          JSON.stringify(taskForSearch),
-        );
+        validateUpdateSuccess(body, taskForSearch);
       });
   });
 
