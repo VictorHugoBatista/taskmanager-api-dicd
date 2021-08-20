@@ -83,8 +83,10 @@ describe('TaskController.delete (e2e)', () => {
   });
 
   it('should return 404 for non existing task', () => {
+    const taskForSearch = repository.data[2];
     return request(app.getHttpServer())
       .patch(`/task/${MongodbHelper.generateObjectId()}`)
+      .send(taskForSearch)
       .expect(404);
   });
 
