@@ -26,4 +26,9 @@ export class TaskRepository implements TaskRepositoryAbstract {
   public async delete(id: string): Promise<Task> {
     return await this.model.findByIdAndDelete(id);
   }
+
+  public async update(id: string, dataForUpdate: Task): Promise<Task> {
+    dataForUpdate.updatedAt = new Date();
+    return await this.model.findByIdAndUpdate(id, dataForUpdate, { new: true });
+  }
 }

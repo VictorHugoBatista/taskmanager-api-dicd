@@ -5,4 +5,5 @@ export abstract class TaskRepository {
   public abstract list(): Promise<Task[]>;
   public abstract get(id: string): Promise<Task>;
   public abstract delete(id: string): Promise<Task>;
+  public abstract update(id: string, dataForUpdate: Task): Promise<Task>;
 }

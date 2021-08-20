@@ -5,11 +5,13 @@ import {
   Get,
   NotFoundException,
   Param,
+  Patch,
   Post,
 } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { MongodbIdValidation } from '../../../common/application/pipes/mongodb-id-validation-pipe';
 import { CreateTaskRequest } from '../contracts/requests/create-task-request';
+import { UpdateTaskRequest } from '../contracts/requests/update-task-request';
 import { TaskRepository } from '../../domain/repositories/task.repository';
 
 import { Task } from '../contracts/entities/task.entity';
@@ -44,6 +46,23 @@ export class TaskController {
   @ApiTags('Tasks')
   public create(@Body() body: CreateTaskRequest) {
     return this.taskRepository.create(body as Task);
+  }
+
+  @Patch(':id')
+  @ApiOperation({ summary: 'Update task' })
+  @ApiBody({ type: UpdateTaskRequest })
+  @ApiTags('Tasks')
+  public async update(
+    @Param('id', new MongodbIdValidation()) id: string,
+    @Body() body: UpdateTaskRequest,
+  ) {
+    const task = await this.taskRepository.update(id, body as Task);
+
+    if (!task) {
+      throw new NotFoundException();
+    }
+
+    return task;
   }
 
   @Delete('/:id')
