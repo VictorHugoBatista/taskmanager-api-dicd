@@ -4,6 +4,7 @@ import * as request from 'supertest';
 import { MongodbHelper } from '../../src/common/application/helpers/mongodb';
 import { CreateTaskBuilder } from '../../src/task/application/builders/create-task-entity.builder';
 import { InMemoryTaskRepository } from '../../src/task/application/repositories/in-memory-task-repository';
+import { Task } from '../../src/task/application/contracts/entities/task.entity';
 import { TaskModuleTest } from './builders/task-module-test';
 
 describe('TaskController.delete (e2e)', () => {
@@ -21,11 +22,11 @@ describe('TaskController.delete (e2e)', () => {
     ];
   });
 
-  const validateUpdateSuccess = (body, taskForUpdate) => {
-    expect(JSON.stringify(body)).toEqual(JSON.stringify(taskForUpdate));
-    expect(JSON.stringify(repository.data[2])).toEqual(
-      JSON.stringify(taskForUpdate),
-    );
+  const validateUpdateSuccess = (taskForUpdate: Task, responseBody: Task) => {
+    expect(taskForUpdate.title).toEqual(responseBody.title);
+    expect(taskForUpdate.description).toEqual(responseBody.description);
+    expect(taskForUpdate.title).toEqual(repository.data[2].title);
+    expect(taskForUpdate.description).toEqual(repository.data[2].description);
   };
 
   it('should update title and return the given task id', () => {
@@ -36,7 +37,7 @@ describe('TaskController.delete (e2e)', () => {
       .send(taskForSearch)
       .expect(200)
       .expect(({ body }) => {
-        validateUpdateSuccess(body, taskForSearch);
+        validateUpdateSuccess(taskForSearch, body);
       });
   });
 
@@ -48,7 +49,7 @@ describe('TaskController.delete (e2e)', () => {
       .send(taskForSearch)
       .expect(200)
       .expect(({ body }) => {
-        validateUpdateSuccess(body, taskForSearch);
+        validateUpdateSuccess(taskForSearch, body);
       });
   });
 
@@ -61,7 +62,7 @@ describe('TaskController.delete (e2e)', () => {
       .send(taskForSearch)
       .expect(200)
       .expect(({ body }) => {
-        validateUpdateSuccess(body, taskForSearch);
+        validateUpdateSuccess(taskForSearch, body);
       });
   });
 
