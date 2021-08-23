@@ -58,7 +58,7 @@ export class TaskController {
       throw new NotFoundException();
     }
 
-    return task;
+    return await this.taskRepository.update(id, { isDone: !task.isDone });
   }
 
   @Patch('/:id')
