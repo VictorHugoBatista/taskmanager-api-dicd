@@ -3,6 +3,12 @@ import { Document } from 'mongoose';
 
 export type TaskDocument = Task & Document;
 
+export type TaskForUpdate = {
+  title?: string;
+  description?: string;
+  isDone?: boolean;
+};
+
 @Schema()
 export class Task {
   @Prop()

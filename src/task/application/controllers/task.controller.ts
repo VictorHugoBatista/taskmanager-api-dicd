@@ -48,7 +48,20 @@ export class TaskController {
     return this.taskRepository.create(body as Task);
   }
 
-  @Patch(':id')
+  @Patch('/:id/toggle')
+  @ApiOperation({ summary: 'Toggle task status between undone and done' })
+  @ApiTags('Tasks')
+  public async toggle(@Param('id', new MongodbIdValidation()) id: string) {
+    const task = await this.taskRepository.get(id);
+
+    if (!task) {
+      throw new NotFoundException();
+    }
+
+    return await this.taskRepository.update(id, { isDone: !task.isDone });
+  }
+
+  @Patch('/:id')
   @ApiOperation({ summary: 'Update task' })
   @ApiBody({ type: UpdateTaskRequest })
   @ApiTags('Tasks')
