@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { MongodbHelper } from '../../../common/application/helpers/mongodb';
-import { Task } from '../contracts/entities/task.entity';
+import { Task, TaskForUpdate } from '../contracts/entities/task.entity';
 import { TaskRepository } from '../../domain/repositories/task.repository';
 
 @Injectable()
@@ -42,10 +42,12 @@ export class InMemoryTaskRepository implements TaskRepository {
     return task;
   }
 
-  public async update(id: string, dataForUpdate: Task): Promise<Task> {
+  public async update(id: string, dataForUpdate: TaskForUpdate): Promise<Task> {
     MongodbHelper.validateObjectId(id);
 
-    dataForUpdate.updatedAt = new Date();
+    const taskForUpdateTyped = dataForUpdate as Task;
+
+    taskForUpdateTyped.updatedAt = new Date();
 
     let taskKey: number;
     let [task] = this.data.filter((item: Task, taskArrayKey: number) => {
@@ -61,7 +63,7 @@ export class InMemoryTaskRepository implements TaskRepository {
 
     task = {
       ...task,
-      ...dataForUpdate,
+      ...taskForUpdateTyped,
     };
     this.data[taskKey] = task;
 
