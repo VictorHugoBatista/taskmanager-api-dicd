@@ -7,7 +7,7 @@ import { InMemoryTaskRepository } from '../../src/task/application/repositories/
 import { Task } from '../../src/task/application/contracts/entities/task.entity';
 import { TaskModuleTest } from './builders/task-module-test';
 
-describe('TaskController.delete (e2e)', () => {
+describe('TaskController.update (e2e)', () => {
   let app: INestApplication;
   let repository: InMemoryTaskRepository;
 
