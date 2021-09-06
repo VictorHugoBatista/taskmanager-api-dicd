@@ -1,6 +1,8 @@
+import { AxiosResponse } from 'axios';
+import { Observable } from 'rxjs';
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { QuoteFactory } from '../factories/QuoteFactory';
+import { RawQuote } from '../contracts/RawQuote';
 
 @Injectable()
 export class QuotesService {
@@ -8,10 +10,9 @@ export class QuotesService {
 
   constructor(private httpService: HttpService) {}
 
-  public async random() {
-    const rawQuote = await this.httpService.get(
+  public random(): Observable<AxiosResponse<RawQuote>> {
+    return this.httpService.get(
       `${this.baseUrl}/lorem_ipsum/random_lorem_ipsum`,
-    ).toPromise();
-    return new QuoteFactory(rawQuote).build();
+    );
   }
 }

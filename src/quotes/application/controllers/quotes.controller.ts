@@ -4,6 +4,7 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { QuotesService } from '../services/quotes.service';
+import { QuoteFactory } from '../factories/QuoteFactory';
 
 @Controller('quotes')
 export class QuotesController {
@@ -12,7 +13,8 @@ export class QuotesController {
   @Get('/random')
   @ApiOperation({ summary: 'Returns a random quote by calling the Shakespare API' })
   @ApiTags('Quotes')
-  public random() {
-    return this.quotesService.random();
+  public async random() {
+    const rawQuote = await this.quotesService.random().toPromise();
+    return new QuoteFactory(rawQuote.data).build();
   }
 }
