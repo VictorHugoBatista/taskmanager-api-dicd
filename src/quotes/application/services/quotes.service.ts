@@ -6,7 +6,7 @@ import { RawQuote } from '../contracts/RawQuote';
 
 @Injectable()
 export class QuotesService {
-  private baseUrl: string = 'https://random-data-api.com/api';
+  private baseUrl = 'https://random-data-api.com/api';
 
   constructor(private httpService: HttpService) {}
 
