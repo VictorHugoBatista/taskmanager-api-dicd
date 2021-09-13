@@ -1,6 +1,8 @@
 import {
   Controller,
   Get,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import {map} from 'rxjs/operators';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -21,6 +23,10 @@ export class QuotesController {
   }
 
   private processResponse(response) {
-    return new QuoteFactory(response.data).build();
+    if (response.status === HttpStatus.OK) {
+      return new QuoteFactory(response.data).build();
+    }
+
+    throw new HttpException(response.data, response.status);
   }
 }
